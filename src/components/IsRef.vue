@@ -9,17 +9,26 @@
             </div>
         
 
-            <div id="matrixElemInput">
+
+            <div v-if="matrix" id="matrixElemInput">
                 <div v-for="rowIndex in rows" :key="`row-${rowIndex}`" class="row">
                     <input v-for="colIndex in cols" :key="`col-${colIndex}`" type="text" class="inputElem">
                 </div>
+                <button id="checkRef" @click="checkRef">
+                    submit
+                </button>
             </div>
+
+
         </div>
   
     </div>
 </template>
 
 <script>
+
+import { isRowEchelonForm } from '@/scripts/matrixUtils.js';
+
 export default {
     name: 'IsRef',
     data() {
@@ -49,11 +58,36 @@ export default {
             }
             console.log(this.matrix);
         },
-
         resetMatrix() {
             this.matrix = null;
             this.rows = 0;
             this.cols = 0;
+        },
+        checkRef() {
+
+            let matrixElemInput = document.getElementById('matrixElemInput');
+
+            let rows = matrixElemInput.getElementsByClassName('row');
+            
+            for (let i = 0; i < rows.length; i++) {
+                let row = rows[i];
+                let inputs = row.getElementsByClassName('inputElem');
+                for (let j = 0; j < inputs.length; j++) {
+                    let input = inputs[j];
+                    let value = input.value;
+
+                    // string to Float
+                    value = parseFloat(value);
+                    this.matrix[i][j] = value;
+                }
+            }
+
+
+            if (isRowEchelonForm(this.matrix)) {
+                alert('Matrix is in row echelon form');
+            } else {
+                alert('Matrix is not in row echelon form');
+            }
         }
         
     }
@@ -77,7 +111,7 @@ export default {
     justify-content: center;
     align-items: center; /* Changed to center to align items vertically */
     flex-direction: column;
-    width: 25%;
+    width: 50%;
     max-width: 50%;
     height: 70vh;
     padding: 20px;
