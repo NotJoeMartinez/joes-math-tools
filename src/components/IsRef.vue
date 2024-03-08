@@ -2,13 +2,17 @@
     <div id="flexContainer">
         <div class="matrixForm">
             <div id="matrixDimsInput">
-                Matrix Size: <input type="text">x<input type="text">
+                Matrix Size: <input type="text" id="mInput">x<input type="text" id="nInput">
                 <button id="matrixDimsInputBtn" @click="generateMatrixInput">
                     submit
                 </button>
             </div>
         
+
             <div id="matrixElemInput">
+                <div v-for="rowIndex in rows" :key="`row-${rowIndex}`" class="row">
+                    <input v-for="colIndex in cols" :key="`col-${colIndex}`" type="text" class="inputElem">
+                </div>
             </div>
         </div>
   
@@ -27,25 +31,31 @@ export default {
     },
     methods: {
         generateMatrixInput() {
-            let rows = document.querySelector('input[type="text"]').value;
-            let cols = document.querySelector('input[type="text"]').nextElementSibling.value;
+            this.resetMatrix();
+            const rows = parseInt(document.getElementById('mInput').value); 
+            const cols = parseInt(document.getElementById('nInput').value); 
+            this.rows = rows;
+            this.cols = cols;
+            console.log(rows, cols);    
 
-            let matrixElemInput = document.getElementById('matrixElemInput');
-
+            this.matrix = []; 
 
             for (let i = 0; i < rows; i++) {
-                let row = document.createElement('div');
-                row.setAttribute("class", "row");
+                let row = []
                 for (let j = 0; j < cols; j++) {
-                    let input = document.createElement('input');
-                    input.setAttribute("type", "text");
-                    input.setAttribute("class", "inputElem");
-                    row.appendChild(input);
+                    row.push('');
                 }
-                matrixElemInput.appendChild(row);
+                this.matrix.push(row);
             }
+            console.log(this.matrix);
+        },
 
+        resetMatrix() {
+            this.matrix = null;
+            this.rows = 0;
+            this.cols = 0;
         }
+        
     }
 }
 
@@ -76,12 +86,12 @@ export default {
 
 #matrixDimsInput input {
     width: 20px;
-    height: 1.2em; /* Set the height to match your line-height, assuming default line-height is around 1.2 */
-    font-size: 16px; /* Adjust this to match your text font size */
-    padding: 0; /* Remove default padding */
-    border: 1px solid #000; /* Default style, adjust as needed */
-    vertical-align: middle; /* Aligns input vertically with inline(-block) elements like text */
-    margin: 0 2px; /* Optional: add some space around your inputs */
+    height: 1.2em; 
+    font-size: 16px; 
+    padding: 0; 
+    border: 1px solid #000; 
+    vertical-align: middle; 
+    margin: 0 2px; 
 }
 
 #matrixDimsInputBtn {
@@ -92,11 +102,27 @@ export default {
 #matrixElemInput {
     display: flex;
     flex-direction: column;
+    margin-top: 1.5rem;
+}
+
+
+.inputElem {
+    width: 1.5rem;
+    height: 1.5rem; 
+    font-size: 16px; 
+    padding: 0; 
+    border: 1px solid #000; 
+    margin-right: 0.2rem;
+    margin-left: 0.2rem;
+
 }
 
 .row {
   display: flex; 
   justify-content: space-between; 
   flex-wrap: nowrap; 
+  margin-top: 0.5rem;
 }
+
+
 </style>
