@@ -11,7 +11,7 @@
                 <div v-for="rowIndex in rows" :key="`row-${rowIndex}`" class="row">
                     <input v-for="colIndex in cols" :key="`col-${colIndex}`" type="text" class="inputElem">
                 </div>
-                <button id="checkRef" @click="emitArrayValues">
+                <button id="submitMatrixElemBtn" @click="emitArrayValues">
                     submit
                 </button>
             </div>
@@ -82,12 +82,11 @@ export default {
 
 .matrixForm {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center; /* Changed to center to align items vertically */
     flex-direction: column;
     width: 50%;
     max-width: 50%;
-    height: 70vh;
     padding: 20px;
     background-color: #ebebef;
 }
@@ -113,6 +112,10 @@ export default {
     margin-top: 1.5rem;
 }
 
+#submitMatrixElemBtn {
+    margin-top: 1rem;
+
+}
 
 .inputElem {
     width: 1.5rem;

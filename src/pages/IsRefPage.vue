@@ -3,6 +3,22 @@
         <MatrixForm
             @matrixSubmitClicked="checkRef" 
         />
+
+
+        <div v-if="showResult" class="result">
+            <div v-if="isRowEchelonForm" style="background-color: green;">
+                <p>
+                    The matrix is in row echelon form
+                </p>
+            </div>
+
+            <div v-else  style="background-color: red;">
+                <p>
+                    The matrix is not in row echelon form
+                </p>
+            </div>
+        </div>
+
     </div>
 </template>
 
@@ -13,14 +29,23 @@ export default {
     components: {
         MatrixForm 
     },
+    data() {
+        return {
+            showResult: false,
+            isRowEchelonForm: false
+        }
+    },
     methods: {
         checkRef(matrix) {
 
             let result = isRowEchelonForm(matrix);
+            this.showResult = true;
             if (result) {
-                alert('The matrix is in row echelon form');
+                this.isRowEchelonForm = true;
+                console.log('The matrix is in row echelon form');
             } else {
-                alert('The matrix is not in row echelon form');
+                this.isRowEchelonForm = false;
+                console.log('The matrix is not in row echelon form');
             }
 
         }
@@ -33,7 +58,11 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
     height: 100vh;
     background-color: #fff;
+}
+.result {
+    display: flex;
 }
 </style>
