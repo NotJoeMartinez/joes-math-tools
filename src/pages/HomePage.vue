@@ -4,6 +4,12 @@
   </main>
 </template>
 
-<script setup>
-  import Home from '@/components/Home.vue'
+<script>
+import Home from '@/components/misc/Home.vue'
+
+export default {
+  components: {
+    Home
+  }
+}
 </script>

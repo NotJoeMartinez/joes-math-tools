@@ -1,6 +1,5 @@
 <template>
-    <div id="flexContainer">
-        <div class="matrixForm">
+   <div class="matrixForm">
             <div id="matrixDimsInput">
                 Matrix Size: <input type="text" id="mInput">x<input type="text" id="nInput">
                 <button id="matrixDimsInputBtn" @click="generateMatrixInput">
@@ -8,29 +7,23 @@
                 </button>
             </div>
         
-
-
             <div v-if="matrix" id="matrixElemInput">
                 <div v-for="rowIndex in rows" :key="`row-${rowIndex}`" class="row">
                     <input v-for="colIndex in cols" :key="`col-${colIndex}`" type="text" class="inputElem">
                 </div>
-                <button id="checkRef" @click="checkRef">
+                <button id="checkRef" @click="emitArrayValues">
                     submit
                 </button>
             </div>
 
-
-        </div>
-  
     </div>
 </template>
 
+
 <script>
 
-import { isRowEchelonForm } from '@/scripts/matrixUtils.js';
-
 export default {
-    name: 'IsRef',
+    name: 'MatrixForm',
     data() {
         return {
             matrix: null,
@@ -45,8 +38,6 @@ export default {
             const cols = parseInt(document.getElementById('nInput').value); 
             this.rows = rows;
             this.cols = cols;
-            console.log(rows, cols);    
-
             this.matrix = []; 
 
             for (let i = 0; i < rows; i++) {
@@ -56,17 +47,14 @@ export default {
                 }
                 this.matrix.push(row);
             }
-            console.log(this.matrix);
         },
         resetMatrix() {
             this.matrix = null;
             this.rows = 0;
             this.cols = 0;
         },
-        checkRef() {
-
+        emitArrayValues() {
             let matrixElemInput = document.getElementById('matrixElemInput');
-
             let rows = matrixElemInput.getElementsByClassName('row');
             
             for (let i = 0; i < rows.length; i++) {
@@ -81,30 +69,16 @@ export default {
                     this.matrix[i][j] = value;
                 }
             }
-
-
-            if (isRowEchelonForm(this.matrix)) {
-                alert('Matrix is in row echelon form');
-            } else {
-                alert('Matrix is not in row echelon form');
-            }
+            
+            this.$emit('matrixSubmitClicked', this.matrix);
         }
-        
+         
     }
 }
-
-
 </script>
 
 
 <style scoped>
-#flexContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #fff;
-}
 
 .matrixForm {
     display: flex;
