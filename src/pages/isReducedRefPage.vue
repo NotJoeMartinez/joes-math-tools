@@ -1,18 +1,17 @@
+
 <template>
     <div class="flexContainer">
+
         <div class="pageTitle">
             <h1>
-                Is Row Echelon Form
+                Is Reduced Row Echelon Form
             </h1>
         </div>
 
-        <MatrixForm
-            @matrixSubmitClicked="checkRef" 
-        />
-
+        <MatrixForm @matrixSubmitClicked="checkRref" />
 
         <div v-if="showResult" class="result">
-            <div v-if="isRowEchelonForm" style="background-color: green;">
+            <div v-if="isRREF" style="background-color: green;">
                 <p>
                     The matrix is in row echelon form
                 </p>
@@ -29,34 +28,37 @@
 </template>
 
 <script>
-import  MatrixForm  from '@/components/forms/MatrixForm.vue';
-import { isRowEchelonForm } from '@/scripts/matrixUtils.js';
+import MatrixForm from '@/components/forms/MatrixForm.vue'
+import { isReducedRowEchelon } from '@/scripts/matrixUtils.js'
+
 export default {
-    components: {
-        MatrixForm 
+    components:  {
+        MatrixForm
     },
     data() {
         return {
             showResult: false,
-            isRowEchelonForm: false
+            isRREF: false
         }
-    },
-    methods: {
-        checkRef(matrix) {
+    }, 
+    methods : {
+        checkRref(matrix) {
 
-            let result = isRowEchelonForm(matrix);
-            this.showResult = true;
+            let result = isReducedRowEchelon(matrix)
+
             if (result) {
-                this.isRowEchelonForm = true;
-                console.log('The matrix is in row echelon form');
+                this.isRREF = true;
+                console.log("The matrix is in reduced row echelon form");
             } else {
-                this.isRowEchelonForm = false;
-                console.log('The matrix is not in row echelon form');
+                this.isRREF = false;
+                console.log("The matrix is not in reduced row echelon form");
             }
 
+            this.showResult = true;
         }
     }
 }
+
 </script>
 
 <style scoped>
@@ -68,6 +70,7 @@ export default {
     height: 100vh;
     background-color: #fff;
 }
+
 .result {
     display: flex;
 }

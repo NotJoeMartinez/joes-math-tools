@@ -5,6 +5,9 @@
             <li>
                <router-link to="/isref">Is Row Echelon</router-link> 
             </li>
+            <li>
+               <router-link to="/isrref">Is Reduced Row Echelon</router-link> 
+            </li>
          </ul>
       </div>
    </div>

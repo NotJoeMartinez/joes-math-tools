@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 import HomePage from '@/pages/HomePage.vue'
 import IsRefPage from '@/pages/IsRefPage.vue'
+import IsReducedRefPage from '@/pages/isReducedRefPage.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -15,6 +16,11 @@ const router = createRouter({
         path: '/isRef',
         name: 'IsRef',
         component: IsRefPage 
+    },
+    {
+        path: '/isrref',
+        name: 'IsRref',
+        component: IsReducedRefPage
     }
   ]
 })
